@@ -1,8 +1,8 @@
 <template>
   <div class="container-main" v-if="reRender">
-    <Navbar v-model="title" />
+    <Navbar v-model="title" @showSidebar="handleShowSidebar()" />
     <div class="content">
-      <Sidebar />
+      <Sidebar :class="[isShowSidebar === true ? '' : 'sidebar']" />
       <Loading v-if="isLoading" />
       <div v-else class="container-movie-detail">
         <p class="movie-title">{{ dataMovie?.Title }}</p>
@@ -13,13 +13,15 @@
               <p>Release Date: {{ dataMovie?.Released }}</p>
               <p>Language: {{ dataMovie?.Language }}</p>
               <p>Genre: {{ dataMovie?.Genre }}</p>
-              <p>Cast & Crew: {{ dataMovie?.Actors }}</p>
+              <p class="cast-crew">Cast & Crew: {{ dataMovie?.Actors }}</p>
               <p>Director: {{ dataMovie?.Director }}</p>
               <p>Length: {{ dataMovie?.Runtime }}</p>
             </div>
-            <p class="sinopsis-title">Sinopsis</p>
-            <div class="sinopsis-detail">
-              <p>{{ dataMovie?.Plot }}</p>
+            <div class="sinopsis">
+              <p class="sinopsis-title">Sinopsis</p>
+              <div class="sinopsis-detail">
+                <p>{{ dataMovie?.Plot }}</p>
+              </div>
             </div>
             <div class="buttons">
               <button class="btn">Buy Ticket</button>
@@ -43,6 +45,7 @@
         </div>
       </div>
     </div>
+    <Footer />
   </div>
 </template>
 
@@ -51,12 +54,14 @@ import Navbar from "../../components/Navbar.vue";
 import Sidebar from "../../components/Sidebar.vue"
 import Loading from "../../components/Loading.vue"
 import MovieCard from "../../components/MovieCard.vue"
+import Footer from "../../components/Footer.vue"
 export default {
   components: {
     Navbar,
     Sidebar,
     Loading,
-    MovieCard
+    MovieCard,
+    Footer
   },
   data(){
     return {
@@ -66,7 +71,8 @@ export default {
       movies: null,
       title: "avatar",
       debounce: null,
-      reRender: true
+      reRender: true,
+      isShowSidebar: false,
     }
   },
 
@@ -91,6 +97,9 @@ export default {
   },
 
   methods: {
+    handleShowSidebar() {
+      this.isShowSidebar = !this.isShowSidebar;
+    },
     async getDetail() {
       this.isLoading = true;
       // eslint-disable-next-line no-unused-vars
@@ -129,6 +138,37 @@ export default {
 </script>
 
 <style scoped>
+@media screen and (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+  .movie-detail {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  .movie-info {
+    margin-left: 20px 0 0 16px;
+  }
+  .movie-info-detail {
+    flex-direction: column;
+    overflow-wrap: wrap;
+    margin: 10px 0 0 -16px;
+    max-width: 100%;
+  }
+  .sinopsis{
+    margin-left: -16px;
+  }
+  .sinopsis-detail {
+    width: 100%;
+  }
+  .sinopsis-detail p {
+    overflow-wrap: break-word;
+  }
+  .cast-crew {
+    overflow-wrap: break-word;
+  }
+}
+
 .container-main {
   display: flex;
   flex-direction: column;
@@ -142,6 +182,7 @@ export default {
   width: 100%;
   color: white;
   padding: 20px;
+  overflow-wrap: wrap;
 }
 .detail-poster {
   border-radius: 15px;
@@ -188,7 +229,7 @@ export default {
   margin: 30px 0 20px 0;
 }
 .now-playing-list {
-  display: grid;
-  grid-template-columns: auto auto auto;
+  display: flex;
+  flex-wrap: wrap;
 }
 </style>

@@ -13,12 +13,18 @@ export default {
 </script>
 
 <style scoped>
+@media screen and (min-width: 768px){
+  .container {
+    padding: 40px 180px;
+  }
+}
+
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #C0222E;
   color: white;
-  padding: 40px 180px;
+  padding: 40px;
 }
 </style>

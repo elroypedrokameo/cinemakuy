@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="`/details/${idMovie}`" >
+  <RouterLink :to="`/details/${idMovie}`" >
     <div @click="$emit('detail',id) " class="container">
       <img :src="poster" alt="poster" class="poster">
       <div :class="[isDetail === true ? 'detail' : '']" class="movie-detail">
@@ -8,12 +8,10 @@
         <!-- <p>{{ rated }}</p> -->
       </div>
     </div>
-  </router-link>
+  </RouterLink>
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
-import { RouterLink } from "vue-router"
 export default {
   props: {
     poster: {
@@ -49,6 +47,8 @@ export default {
 .container{
   display: flex;
   flex-direction: column;
+  max-width: 400px;
+  width: 100%;
   justify-content: center;
   align-items: center;
   gap: 10px;
@@ -70,5 +70,8 @@ export default {
 }
 .detail {
   display: none;
+}
+.movie-title {
+  max-width: 100%;
 }
 </style>

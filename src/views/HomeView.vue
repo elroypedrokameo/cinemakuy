@@ -1,5 +1,4 @@
 <script>
-// import MainLayout from "../src/components/MainLayout/Index.vue";
 import MovieCard from "../components/MovieCard.vue";
 import Navbar from "../components/Navbar.vue";
 import Sidebar from "../components/Sidebar.vue";
@@ -23,6 +22,7 @@ export default {
       movieTitle: "avatar",
       debounce: null,
       isLoading: false,
+      isShowSidebar: false,
     };
   },
 
@@ -40,6 +40,9 @@ export default {
   },
 
   methods: {
+    onClickHandler() {
+      console.log("clicked");
+    },
     async getMovies() {
       this.isLoading = true;
       // eslint-disable-next-line no-unused-vars
@@ -52,6 +55,10 @@ export default {
         console.log(error.response);
         this.isLoading = false;
       })
+    },
+
+    handleShowSidebar() {
+      this.isShowSidebar = !this.isShowSidebar;
     }
   }
 }
@@ -59,9 +66,9 @@ export default {
 
 <template>
   <div class="container-main">
-    <Navbar v-model="movieTitle" />
+    <Navbar v-model="movieTitle" @showSidebar="handleShowSidebar()" />
     <div class="content">
-      <Sidebar />
+      <Sidebar class="" :class="[isShowSidebar === true ? '' : 'sidebar']" />
       <div class="container-movie-list">
         <div class="movie-list">
           <Loading v-if="isLoading" />
@@ -78,6 +85,13 @@ export default {
         </div>
         <div class="pagination">
           <p>Sebelumnya</p>
+          <!-- <VuePaginate
+            :total-items="10"
+            :items-per-page="1"
+            :max-pages-shown="5"
+            :current-page="1"
+            :on-click="onClickHandler"
+          /> -->
           <p>Selanjutnya</p>
         </div>
       </div>
@@ -87,7 +101,22 @@ export default {
 </template>
 
 <style scoped>
+@media screen and (max-width: 768px) {
+  .movie-list {
+    display: flex;
+    justify-content: center;
+  }
+  .sidebar {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 768px) {
+}
+
 .container-main {
+  max-width: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -105,8 +134,10 @@ export default {
   background-color: #222B31;
 }
 .movie-list {
-  display: grid;
-  grid-template-columns: auto auto auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 .pagination {
   display: flex;

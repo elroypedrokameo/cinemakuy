@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <p v-for="(item, key) in sidebars" :key="key">{{ item.title }}</p>
+    <div class="link-sidebar" v-for="(item, key) in sidebars" :key="key">
+      <RouterLink :to="`${item.link}`">
+        <p>{{ item.title }}</p>
+      </RouterLink>
+    </div>
   </div>
 </template>
 
@@ -11,23 +15,28 @@ export default {
       sidebars: [
         {
           id: 1,
-          title: "Now Playing"
+          title: "Now Playing",
+          link: "/"
         },
         {
           id: 2,
-          title: "Comming Soon"
+          title: "Comming Soon",
+          link: "#/"
         },
         {
           id: 3,
-          title: "Theatre"
+          title: "Theatre",
+          link: "#/"
         },
         {
           id: 4,
-          title: "Promotion"
+          title: "Promotion",
+          link: "#/"
         },
         {
           id: 5,
-          title: "Informations"
+          title: "Informations",
+          link: "#/"
         },
       ]
     }
@@ -45,7 +54,6 @@ export default {
   width: 20rem;
   height: auto;
   color: white;
-  
 }
 p {
   width: 100%;
@@ -54,5 +62,12 @@ p {
 }
 p:hover {
   cursor: pointer;
+}
+.link-sidebar {
+  padding: 10px;
+  width: 100%;
+}
+.link-sidebar:hover {
+  background-color: #2F3336;
 }
 </style>
