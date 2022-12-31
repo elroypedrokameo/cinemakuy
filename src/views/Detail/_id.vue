@@ -153,6 +153,7 @@ export default {
     flex-direction: column;
     overflow-wrap: wrap;
     margin: 10px 0 0 -16px;
+    inline-size: 100%;
     max-width: 100%;
   }
   .sinopsis{

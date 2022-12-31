@@ -92,7 +92,7 @@ export default {
             :current-page="1"
             :on-click="onClickHandler"
           /> -->
-          <p>Selanjutnya</p>
+          <p class="next-page">Selanjutnya</p>
         </div>
       </div>
     </div>
@@ -146,5 +146,9 @@ export default {
   gap: 10px;
   padding: 10px;
   color:white;
+}
+.next-page {
+  cursor: pointer;
+  color: #C0222E;
 }
 </style>
